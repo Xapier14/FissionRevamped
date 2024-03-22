@@ -42,6 +42,8 @@ namespace FissionRevamped.Services.Music
                 duration = "00:" + duration;
             searchDuration = ytDlp.ExitTime - ytDlp.StartTime;
 
+            LoggingService.LogInfo($"YT-DLP returned with exit code {ytDlp.ExitTime}.");
+
             var track = new PlayerTrack
             {
                 Artist = channel,
