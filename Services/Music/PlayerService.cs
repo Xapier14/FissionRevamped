@@ -30,7 +30,9 @@ namespace FissionRevamped.Services.Music
                 throw new Exception("Failed to create YT-DLP");
             }
             ytDlp.WaitForExit();
+            LoggingService.LogInfo($"YT-DLP returned with exit code {ytDlp.ExitTime}.");
             var rawOutput = ytDlp.StandardOutput.ReadToEnd();
+            LoggingService.LogInfo($"stdout:\n {rawOutput}");
             var lines = rawOutput?.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries) ?? ["", "", ""];
             var url = lines[0];
             var id = lines[1];
@@ -42,7 +44,6 @@ namespace FissionRevamped.Services.Music
                 duration = "00:" + duration;
             searchDuration = ytDlp.ExitTime - ytDlp.StartTime;
 
-            LoggingService.LogInfo($"YT-DLP returned with exit code {ytDlp.ExitTime}.");
 
             var track = new PlayerTrack
             {
